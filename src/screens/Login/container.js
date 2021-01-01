@@ -9,6 +9,7 @@ import {COLOR_LIGHT} from '../../styles/colors';
 import InputFlat from '../../components/InputFlat';
 import * as ComponentsGlobal from '../../components';
 import NameBrand from '../../common/NameBrand';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 export class Login extends Component {
   constructor(props) {
     super(props);
@@ -17,8 +18,9 @@ export class Login extends Component {
       emailOrPhone: '',
     };
   }
+
   componentDidMount() {
-    this.props.navigation.setOptions({title: 'Login'});
+    this.props.navigation.setOptions({title: 'Masuk'});
   }
   onBackButtonPressAndroid = () => {
     setTimeout(() => {
@@ -42,6 +44,9 @@ export class Login extends Component {
       emailOrPhone: text,
     });
   };
+  _navigateRegister = () => {
+    this.props.navigation.navigate('signUp');
+  };
   render() {
     return (
       <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
@@ -54,6 +59,27 @@ export class Login extends Component {
             label="Email atau Nomer Ponsel"
             message="contoh: 080xxxxxxxxx"
           />
+          <View>
+            <TouchableOpacity
+              onPress={this._navigateRegister}
+              style={{
+                paddingVertical: PADDING,
+              }}>
+              <Text
+                style={{
+                  fontSize: Fontsize(9),
+                }}>
+                <Text>Belum punya akun ? </Text>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: COLOR_LIGHT.PRIMARY,
+                  }}>
+                  Daftar
+                </Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
           <ComponentsGlobal.Components.ButtonFrom
             onPress={() => {
               console.log('oke');

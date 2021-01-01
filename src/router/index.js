@@ -22,6 +22,7 @@ const RootNavigator = () => {
         name="splash"
         component={screens.Splash}
       />
+
       <Stack.Screen
         options={{
           headerStyle: {
@@ -31,6 +32,15 @@ const RootNavigator = () => {
         }}
         name="signIn"
         component={screens.Login}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            elevation: 0,
+          },
+        }}
+        name="signUp"
+        component={screens.Register}
       />
     </Stack.Navigator>
   );
