@@ -47,6 +47,16 @@ export class Login extends Component {
   _navigateRegister = () => {
     this.props.navigation.navigate('signUp');
   };
+  _signIn = () => {
+    this.props.navigation.reset({
+      index: 3,
+      routes: [
+        {
+          name: 'bottomTabBar',
+        },
+      ],
+    });
+  };
   render() {
     return (
       <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
@@ -81,9 +91,7 @@ export class Login extends Component {
             </TouchableOpacity>
           </View>
           <ComponentsGlobal.Components.ButtonFrom
-            onPress={() => {
-              console.log('oke');
-            }}
+            onPress={this._signIn}
             label="Masuk"
             stylesButton={{
               marginTop: MARGIN,

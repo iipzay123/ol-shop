@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {screens} from '../screens';
 import {Fontsize, MARGIN} from '../styles/maxing';
+import {BottomNavigator} from './BottomScreen';
 //func
 
 const Stack = createStackNavigator();
@@ -41,6 +42,13 @@ const RootNavigator = () => {
         }}
         name="signUp"
         component={screens.Register}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="bottomTabBar"
+        component={BottomNavigator}
       />
     </Stack.Navigator>
   );
