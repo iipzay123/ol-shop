@@ -4,7 +4,7 @@ const initialState = {
   maintenance: false,
 };
 
-const Home = (state = initialState, action) => {
+const Cart = (state = initialState, action) => {
   switch (action.type) {
     case `${MAINTENANCE}`:
       return {
@@ -26,4 +26,4 @@ const Home = (state = initialState, action) => {
   }
 };
 
-export default Home;
+export default Cart;
