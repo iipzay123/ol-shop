@@ -22,6 +22,7 @@ export class Login extends Component {
   componentDidMount() {
     this.props.navigation.setOptions({title: 'Masuk'});
   }
+
   onBackButtonPressAndroid = () => {
     setTimeout(() => {
       this.setState({

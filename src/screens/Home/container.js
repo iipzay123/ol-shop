@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   ScrollView,
@@ -6,21 +7,104 @@ import {
   ToastAndroid,
   Animated,
   StatusBar,
+  TextInput,
+  FlatList,
+  Image,
 } from 'react-native';
 import StatusBarC from '../../common/StatusBar_c';
 import {COLOR_LIGHT} from '../../styles/colors';
-import {normalized, PADDING} from '../../styles/maxing';
+import {Fontsize, normalized, PADDING} from '../../styles/maxing';
 import {styles} from './styles';
 import {AndroidBackHandler} from 'react-navigation-backhandler';
-
+import {ComponentsHome} from './components';
+import LinearGradient from 'react-native-linear-gradient';
+const Spacing = () => <View style={{marginVertical: PADDING / 2}} />;
 export class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       countBack: 1,
+      adsProductPopular: [],
+      category: [],
+      product: [],
+      currentIndex: 0,
+      loadingSlider: true,
     };
-    this.scrollY = new Animated.Value(0);
   }
+
+  componentDidMount() {
+    this._getProductPopular();
+    this._getCategory();
+    this._getProduct();
+  }
+  _getProduct = () => {
+    let dummy = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    this.setState({
+      product: dummy,
+    });
+  };
+  _getCategory = () => {
+    const dummy = [
+      {
+        name: '',
+        disabled: false,
+      },
+      {
+        name: 'Special diskon gede2an 1.1',
+        disabled: false,
+      },
+      {
+        name: 'Promo',
+        disabled: false,
+      },
+      {
+        name: 'Gamis',
+        disabled: false,
+      },
+      {
+        name: 'Krudung',
+        disabled: false,
+      },
+      {
+        name: 'Rok',
+        disabled: false,
+      },
+      {
+        name: 'Tas',
+        disabled: false,
+      },
+      {
+        name: 'Sepatu',
+        disabled: false,
+      },
+    ];
+    this.setState({
+      category: dummy,
+    });
+  };
+  _getProductPopular() {
+    let dummy = [
+      {
+        images:
+          'https://cdn-2.tstatic.net/tribunnews/foto/bank/images/tokopedia_20180525_095150.jpg',
+      },
+      {
+        images: 'https://i.ytimg.com/vi/POTolSEe_A4/maxresdefault.jpg',
+      },
+      {
+        images:
+          'https://cdn-2.tstatic.net/tribunnews/foto/bank/images/tokopedia_20180525_095150.jpg',
+      },
+      {
+        images: 'https://i.ytimg.com/vi/POTolSEe_A4/maxresdefault.jpg',
+      },
+    ];
+    this.setState({
+      adsProductPopular: dummy,
+      loadingSlider: false,
+    });
+  }
+
   onBackButtonPressAndroid = () => {
     setTimeout(() => {
       this.setState({
@@ -31,80 +115,31 @@ export class Home extends Component {
       this.setState({
         countBack: (this.state.countBack -= 1),
       });
-      ToastAndroid.show('tekan dua kali untuk keluar', 1000);
+      ToastAndroid.show('Tekan dua kali untuk keluar', 1000);
       return true;
     }
     return false;
   };
-  _handleScroll = () => {};
+
   render() {
-    const opacity = this.scrollY.interpolate({
-      inputRange: [
-        normalized(0.4, true, 'width'),
-        normalized(0.6, true, 'width'),
-      ],
-      outputRange: [0, 1],
-    });
+    if (this.state.loadingSlider) {
+      return <View />;
+    }
     return (
       <>
         <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
-          <StatusBar
-            translucent
-            barStyle="dark-content"
-            backgroundColor="transparent"
-          />
-          <Animated.ScrollView
-            contentContainerStyle={{}}
-            scrollEventThrottle={16}
-            onScroll={Animated.event(
-              [
-                {
-                  nativeEvent: {contentOffset: {y: this.scrollY}},
-                },
-              ],
-              {
-                useNativeDriver: true,
-              },
-            )}>
-            <View
-              style={{
-                backgroundColor: '#aaa',
-                height: 200,
-              }}
+          <StatusBarC light />
+          <ComponentsHome.Header />
+          <ScrollView>
+            <ComponentsHome.Slider
+              autoPlay
+              data={this.state.adsProductPopular}
             />
-            {Array.from(Array(1000), (_, x) => x).map((d, i) => {
-              return <Text key={i}> textInComponent {i} </Text>;
-            })}
-          </Animated.ScrollView>
-          <Animated.View
-            style={{
-              padding: PADDING,
-              backgroundColor: COLOR_LIGHT.WHITE,
-              opacity,
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              top: 0,
-              height: normalized(0.1, true, 'width'),
-              justifyContent: 'center',
-              zIndex: 100,
-            }}
-          />
-          <View
-            style={{
-              padding: PADDING,
-              height: normalized(0.1, true, 'width') + StatusBar.currentHeight,
-              position: 'absolute',
-              paddingTop: StatusBar.currentHeight,
-            }}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-              }}>
-              Izazi
-            </Text>
-          </View>
+            <Spacing />
+            <ComponentsHome.Category data={this.state.category} />
+            <Spacing />
+            <ComponentsHome.ListProduct data={this.state.product} />
+          </ScrollView>
         </AndroidBackHandler>
       </>
     );

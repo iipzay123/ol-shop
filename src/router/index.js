@@ -11,6 +11,7 @@ const Stack = createStackNavigator();
 const RootNavigator = () => {
   return (
     <Stack.Navigator
+      initialRouteName="bottomTabBar"
       screenOptions={{
         headerTitleStyle: {
           fontSize: Fontsize(12),
