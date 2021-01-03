@@ -1,23 +1,28 @@
 import React, {Component} from 'react';
-import {Text, ToastAndroid, View, TextInput} from 'react-native';
+import {Text, ToastAndroid, View, TextInput, Image} from 'react-native';
 import {Components} from './components';
 import {styles} from './styles';
 import {AndroidBackHandler} from 'react-navigation-backhandler';
 import StatusBarC from '../../common/StatusBar_c';
-import {Fontsize, PADDING, normalized} from '../../styles/maxing';
+import {Fontsize, PADDING, normalized, MARGIN} from '../../styles/maxing';
 import {COLOR_LIGHT} from '../../styles/colors';
-import InputFlat from './components/InputFlat';
-
+import InputFlat from '../../components/InputFlat';
+import * as ComponentsGlobal from '../../components';
+import NameBrand from '../../common/NameBrand';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       countBack: 1,
+      emailOrPhone: '',
     };
   }
+
   componentDidMount() {
-    this.props.navigation.setOptions({title: 'Login'});
+    this.props.navigation.setOptions({title: 'Masuk'});
   }
+
   onBackButtonPressAndroid = () => {
     setTimeout(() => {
       this.setState({
@@ -33,19 +38,64 @@ export class Login extends Component {
     }
     return false;
   };
-
+  _handleChangeInput = (text) => {
+    const number = /^d+$/;
+    console.log(number.test(text));
+    this.setState({
+      emailOrPhone: text,
+    });
+  };
+  _navigateRegister = () => {
+    this.props.navigation.navigate('signUp');
+  };
+  _signIn = () => {
+    this.props.navigation.reset({
+      index: 3,
+      routes: [
+        {
+          name: 'bottomTabBar',
+        },
+      ],
+    });
+  };
   render() {
     return (
       <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
         <StatusBarC light />
         <View style={styles.container}>
-          <InputFlat
-            value="000329329863"
+          <NameBrand />
+          <ComponentsGlobal.Components.InputFlat
+            onChangeText={this._handleChangeInput}
+            value={this.state.emailOrPhone}
             label="Email atau Nomer Ponsel"
             message="contoh: 080xxxxxxxxx"
-            styleInput={{
-              height: normalized(0.05, true, 'width'),
-              paddingVertical: 0,
+          />
+          <View>
+            <TouchableOpacity
+              onPress={this._navigateRegister}
+              style={{
+                paddingVertical: PADDING,
+              }}>
+              <Text
+                style={{
+                  fontSize: Fontsize(9),
+                }}>
+                <Text>Belum punya akun ? </Text>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: COLOR_LIGHT.PRIMARY,
+                  }}>
+                  Daftar
+                </Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <ComponentsGlobal.Components.ButtonFrom
+            onPress={this._signIn}
+            label="Masuk"
+            stylesButton={{
+              marginTop: MARGIN,
             }}
           />
         </View>

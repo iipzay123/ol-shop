@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {COLOR_LIGHT} from '../../../../styles/colors';
-import {Fontsize, normalized} from '../../../../styles/maxing';
+import {COLOR_LIGHT} from '../../styles/colors';
+import {Fontsize, normalized} from '../../styles/maxing';
 
 export const stylesInputFlat = StyleSheet.create({
   container: {

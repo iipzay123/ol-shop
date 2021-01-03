@@ -19,4 +19,4 @@ export class StatusBarC extends PureComponent<P> {
   }
 }
 
-export default StatusBarC;
+export default StatusBarC; 

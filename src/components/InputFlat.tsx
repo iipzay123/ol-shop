@@ -12,9 +12,9 @@ export class InputFlat extends PureComponent<P & TextInputProps> {
   render() {
     return (
       <View>
-        <Text style={stylesInputFlat.label}>{this.props.label}</Text>
-        <TextInput {...this.props} style={[stylesInputFlat.container,this.props.styleInput]} />
-        <Text style={stylesInputFlat.label}>{this.props.message}</Text>
+        {this.props.label && <Text style={stylesInputFlat.label}>{this.props.label}</Text>}
+        <TextInput {...this.props} style={[stylesInputFlat.container, this.props.styleInput]} />
+        {this.props.message && <Text style={stylesInputFlat.label}>{this.props.message}</Text>}
       </View>
     );
   }
